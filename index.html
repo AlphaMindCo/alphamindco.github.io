@@ -1,102 +1,139 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="UTF-8">
-    <title>Alpha Mind</title>
-    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600&display=swap" rel="stylesheet">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
-    <style>
-        * {
-            box-sizing: border-box;
-        }
-        html, body {
-            height: 100%;
-            width: 100%;
-            margin: 0;
-            padding: 0;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-family: 'Space Grotesk', sans-serif;
-            background: radial-gradient(circle at top left, #0c1321, #1a1a1a);
-            color: white;
-        }
-        .hero-panel {
-            text-align: center;
-            max-width: 100%;
-            padding: 2rem;
-        }
-        h1 {
-            font-weight: 600;
-            font-size: 3rem;
-            margin-bottom: 0.5rem;
-        }
-        h2 {
-            font-weight: 500;
-            font-size: 1.5rem;
-            color: #BFC5C9;
-        }
-        .logo {
-            height: auto;
-            width: 120px;
-            margin: auto;
-        }
-        #typing-text {
-          font-size: 2em; /* adjust font size as needed */
-          display: inline;
-        }
 
-        #caret {
-          animation: blink-caret 0.75s step-end infinite;
-          border-right: 0.15em solid orange; /* create the cursor effect */
-          display: inline;
-          font-size: 2em; /* adjust font size as needed */
-          line-height: 1em;
-        }
-
-        @keyframes blink-caret {
-          from, to { border-color: transparent }
-          50% { border-color: orange }
-        }
-    </style>
-  </head>
-  <body>
-    <div class="hero-panel">
-        <div class="logo">
-            <img src="static/alphamind.svg" alt="Alpha Mind Logo">
-          </div>
-        <h1>Alpha Mind</h1>
-        <span>
-          <h2 id="typing-text"></h2>  
-          <span id="caret"></span>
-        </span>
-    </div>
-    <script>
-window.onload = function() {
-  const typingText = document.getElementById('typing-text');
-  const text = 'Work smarter, build faster';
-  let index = 0;
-  let timeoutId;
-
-  function type() {
-    typingText.innerHTML = text.slice(0, index);
-    index++;
-
-    if (index > text.length) {
-      clearTimeout(timeoutId); // stop the typing effect
-      setTimeout(() => {
-        // Hide the typing caret by setting the border color to transparent
-        document.getElementById('caret').style.borderRightColor = 'transparent';
-        // Then remove the animation
-        document.getElementById('caret').style.animation = 'none';
-      }, 1000); // wait 2 seconds before typing again
-    } else {
-      timeoutId = setTimeout(type, 50); // continue typing
+<head>
+  <meta charset="UTF-8">
+  <title>Alpha Mind</title>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600&display=swap" rel="stylesheet">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+  <style>
+    * {
+      box-sizing: border-box;
     }
-  }
 
-  type();
-};
-    </script>
-  </body>
+    html,
+    body {
+      height: 100%;
+      width: 100%;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Space Grotesk', sans-serif;
+      background: radial-gradient(circle at top left, #0c1321, #1a1a1a);
+      color: white;
+    }
+
+    .hero-panel {
+      text-align: center;
+      max-width: 100%;
+      padding: 2rem;
+    }
+
+    h1 {
+      font-weight: 600;
+      font-size: 3rem;
+      margin-bottom: 0.5rem;
+    }
+
+    h2 {
+      font-weight: 500;
+      font-size: 1.5rem;
+      color: #BFC5C9;
+    }
+
+    .logo {
+      height: auto;
+      width: 120px;
+      margin: auto;
+    }
+
+    #typing-text {
+      font-size: 2em;
+      /* adjust font size as needed */
+      display: inline;
+    }
+
+    #caret {
+      animation: blink-caret 0.75s step-end infinite;
+      border-right: 0.15em solid orange;
+      /* create the cursor effect */
+      display: inline;
+      font-size: 2em;
+      /* adjust font size as needed */
+      line-height: 1em;
+    }
+
+    @keyframes blink-caret {
+
+      from,
+      to {
+        border-color: transparent
+      }
+
+      50% {
+        border-color: orange
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="hero-panel">
+    <div class="logo">
+      <img src="static/alphamind.svg" alt="Alpha Mind Logo">
+    </div>
+    <h1>Alpha Mind</h1>
+    <span>
+      <h2 id="typing-text"></h2>
+      <span id="caret"></span>
+    </span>
+  </div>
+  <script>
+    window.onload = function () {
+      const typingText = document.getElementById('typing-text');
+      const messages = [
+        'Preparing for takeoff...', 
+        'Human-driven technology', 
+        'This was not written by AI',
+        'Computers do not have feelings',
+        'I don\'t seem to have been paid this month',
+        'Excuse me, can I speak to the manager?'];
+      let messageIndex = 0;
+      let charIndex = 0;
+      let timeoutId;
+
+      function type() {
+        typingText.innerHTML = messages[messageIndex].slice(0, charIndex);
+        charIndex++;
+
+        if (charIndex > messages[messageIndex].length) {
+          clearTimeout(timeoutId); // stop the typing effect
+          timeoutId = setTimeout(erase, 3000); // start erasing after 3 seconds
+        } else {
+          timeoutId = setTimeout(type, 50); // continue typing
+        }
+      }
+
+      function erase() {
+        const words = typingText.innerHTML.split(' ');
+        words.pop(); // remove last word
+        typingText.innerHTML = words.join(' ');
+
+        if (words.length === 0) {
+          charIndex = 0;
+          messageIndex = (messageIndex + 1) % messages.length; // cycle to next message
+          timeoutId = setTimeout(type, 100); // start typing next message after 100ms
+        } else {
+          timeoutId = setTimeout(erase, 100); // continue erasing
+        }
+      }
+
+      type();
+    };
+
+  </script>
+</body>
+
 </html>
