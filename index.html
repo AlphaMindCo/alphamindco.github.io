@@ -18,8 +18,7 @@
       margin: 0;
       padding: 0;
       display: flex;
-      align-items: center;
-      justify-content: center;
+      flex-direction: column;
       font-family: 'Space Grotesk', sans-serif;
       background: radial-gradient(circle at top left, #0c1321, #1a1a1a);
       color: white;
@@ -29,6 +28,11 @@
       text-align: center;
       max-width: 100%;
       padding: 2rem;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
     }
 
     h1 {
@@ -46,7 +50,21 @@
     .logo {
       height: auto;
       width: 120px;
-      margin: auto;
+    }
+
+    #title {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: end;
+      align-items: center;
+    }
+    #subtitle {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: start;
+      align-items: center;
     }
 
     #typing-text {
@@ -81,14 +99,18 @@
 
 <body>
   <div class="hero-panel">
-    <div class="logo">
-      <img src="static/alphamind.svg" alt="Alpha Mind Logo">
+    <div id="title">
+      <div class="logo">
+        <img src="static/alphamind.svg" alt="Alpha Mind Logo">
+      </div>
+      <h1>Alpha Mind</h1>
     </div>
-    <h1>Alpha Mind</h1>
-    <span>
-      <h2 id="typing-text"></h2>
-      <span id="caret"></span>
-    </span>
+    <div id="subtitle">
+      <span>
+        <h2 id="typing-text"></h2>
+        <span id="caret"></span>
+      </span>
+    </div>
   </div>
   <script>
     window.onload = function () {
