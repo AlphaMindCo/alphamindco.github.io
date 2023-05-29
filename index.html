@@ -41,19 +41,23 @@
             width: 120px;
             margin: auto;
         }
-        /* @media (max-width: 768px) {
-            h1 {
-              font-size: 2rem;
-              margin-bottom: 0.25rem;
-            }
-            h2 {
-              font-size: 1rem;
-              margin-bottom: 1rem;
-            }
-            .hero-panel {
-              padding: 1rem;
-            }
-        } */
+        #typing-text {
+          font-size: 2em; /* adjust font size as needed */
+          display: inline;
+        }
+
+        #caret {
+          animation: blink-caret 0.75s step-end infinite;
+          border-right: 0.15em solid orange; /* create the cursor effect */
+          display: inline;
+          font-size: 2em; /* adjust font size as needed */
+          line-height: 1em;
+        }
+
+        @keyframes blink-caret {
+          from, to { border-color: transparent }
+          50% { border-color: orange }
+        }
     </style>
   </head>
   <body>
@@ -62,7 +66,37 @@
             <img src="static/alphamind.svg" alt="Alpha Mind Logo">
           </div>
         <h1>Alpha Mind</h1>
-        <h2>Work smarter, build faster</h2>
+        <span>
+          <h2 id="typing-text"></h2>  
+          <span id="caret"></span>
+        </span>
     </div>
+    <script>
+window.onload = function() {
+  const typingText = document.getElementById('typing-text');
+  const text = 'Work smarter, build faster';
+  let index = 0;
+  let timeoutId;
+
+  function type() {
+    typingText.innerHTML = text.slice(0, index);
+    index++;
+
+    if (index > text.length) {
+      clearTimeout(timeoutId); // stop the typing effect
+      setTimeout(() => {
+        // Hide the typing caret by setting the border color to transparent
+        document.getElementById('caret').style.borderRightColor = 'transparent';
+        // Then remove the animation
+        document.getElementById('caret').style.animation = 'none';
+      }, 1000); // wait 2 seconds before typing again
+    } else {
+      timeoutId = setTimeout(type, 50); // continue typing
+    }
+  }
+
+  type();
+};
+    </script>
   </body>
 </html>
