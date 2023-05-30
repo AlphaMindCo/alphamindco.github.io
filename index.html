@@ -6,6 +6,7 @@
   <title>Alpha Mind</title>
   <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600&display=swap" rel="stylesheet">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.5/gsap.min.js" integrity="sha512-cOH8ndwGgPo+K7pTvMrqYbmI8u8k6Sho3js0gOqVWTmQMlLIi6TbqGWRTpf1ga8ci9H3iPsvDLr4X7xwhC/+DQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
   <style>
     * {
       box-sizing: border-box;
@@ -58,6 +59,7 @@
       flex-direction: column;
       justify-content: end;
       align-items: center;
+      user-select: none;
     }
     #subtitle {
       flex: 1;
@@ -65,6 +67,7 @@
       flex-direction: column;
       justify-content: start;
       align-items: center;
+      user-select: none;
     }
 
     #typing-text {
@@ -113,6 +116,33 @@
     </div>
   </div>
   <script>
+    const themes = {
+      light: {
+        body: {
+          background: 'radial-gradient(circle at top left, #ffffff, #f0f0f0)',
+          color: '#000000',
+        },
+        h1: {
+          color: '#000000',
+        },
+        h2: {
+          color: '#333333',
+        }
+      },
+      dark: {
+        body: {
+          background: 'radial-gradient(circle at top left, #0c1321, #2b2525)',
+          color: '#ffffff',
+        },
+        h1: {
+          color: '#ffffff',
+        },
+        h2: {
+          color: '#BFC5C9',
+        }
+      }
+    }
+
     window.onload = function () {
       const typingText = document.getElementById('typing-text');
       const messages = [
@@ -153,6 +183,39 @@
       }
 
       type();
+
+
+      // Set up theme transition
+      let currentTheme = 'dark';
+      let transitionTime = 0.4; // in seconds
+
+      function switchTheme() {
+        let newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+
+        gsap.to('body', {
+          background: themes[newTheme].body.background,
+          color: themes[newTheme].body.color,
+          duration: transitionTime,
+          ease: "power2.out",  // Smooth easing curve
+        });
+
+        gsap.to('h1', {
+          color: themes[newTheme].h1.color,
+          duration: transitionTime,
+          ease: "power2.out",  // Smooth easing curve
+        });
+
+        gsap.to('h2', {
+          color: themes[newTheme].h2.color,
+          duration: transitionTime,
+          ease: "power2.out",  // Smooth easing curve
+        });
+
+        currentTheme = newTheme;
+      }
+
+      // Attach to click event
+      document.body.addEventListener('click', switchTheme);
     };
 
   </script>
