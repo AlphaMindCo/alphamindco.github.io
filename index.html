@@ -161,11 +161,10 @@
       const typingText = document.getElementById('typing-text');
       const messages = [
         'Preparing for takeoff...',
-        'Human-driven technology',
-        'This was not written by AI',
-        'Computers do not have feelings',
-        'I don\'t seem to have been paid this month',
-        'Excuse me, can I speak to the manager?'];
+        'Fuelling the rockets...',
+        'Triangulating target coordinates...',
+        'Packing the luncboxes...',
+        'Securing valuable cargo...'];
       let messageIndex = 0;
       let charIndex = 0;
       let timeoutId;
@@ -202,7 +201,18 @@
       // Set up theme transition
       let currentTheme = 'dark';
       let transitionTime = 0.4; // in seconds
+
+      // Stars background
       const material = new THREE.MeshBasicMaterial({ color: "white" });
+      const renderer = new THREE.WebGLRenderer({ alpha: true });
+      const scene = new THREE.Scene();
+      const camera = new THREE.PerspectiveCamera(
+        75,
+        window.innerWidth / window.innerHeight,
+        0.1,
+        1000
+      );
+      const stars = [];
 
       function switchTheme() {
         let newTheme = currentTheme === 'dark' ? 'light' : 'dark';
@@ -233,16 +243,17 @@
           const b = parseInt(hex.slice(5, 7), 16);
           return { r, g, b };
         }
-        const starColor = rgb(themes[newTheme].h1.color)
+        let intermediateColor = rgb(themes[currentTheme].h1.color)
+        let targetColor = rgb(themes[newTheme].h1.color)
 
-        gsap.to(material.color, {
-          r: starColor.r,
-          g: starColor.g,
-          b: starColor.b,
+        gsap.to(intermediateColor, {
+          r: targetColor.r,
+          g: targetColor.g,
+          b: targetColor.b,
           duration: transitionTime,
           ease: "power2.out",  // Smooth easing curve
           onUpdate: () => {
-            material.needsUpdate = true;
+            material.color.setRGB(intermediateColor.r, intermediateColor.g, intermediateColor.b);
           },
         });
 
@@ -309,14 +320,6 @@
       //triggerConfetti();
 
       // Stars
-      const scene = new THREE.Scene();
-      const camera = new THREE.PerspectiveCamera(
-        75,
-        window.innerWidth / window.innerHeight,
-        0.1,
-        1000
-      );
-      const renderer = new THREE.WebGLRenderer({ alpha: true });
       renderer.setClearColor(0x00000000, 0);
       renderer.setSize(window.innerWidth, window.innerHeight);
       // Append to #bg-effect
@@ -324,7 +327,6 @@
       bgEffect.appendChild(renderer.domElement);
 
       // Create stars and add them to the scene
-      const stars = [];
       for (let i = 0; i < 100; i++) {
         const geometry = new THREE.SphereGeometry(0.1, 10, 10);
         const star = new THREE.Mesh(geometry, material);
